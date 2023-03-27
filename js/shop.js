@@ -1,6 +1,5 @@
 // If you have time, you can move this variable "products" to a json or js file and load the data in this js. It will look more professional
-var products = [
-   {
+var products = [{
         id: 1,
         name: 'cooking oil',
         price: 10.5,
@@ -75,8 +74,8 @@ var total = 0;
 function buy(id) {
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cartList array
-    for (i=0; i <= products.length; i++) {
-        if (id == products[i].id) {
+    for (i = 0; i < products.length; i++) {
+        if (products[i].id === id) {
             cartList.push(products[i]);
             console.log(cartList);
         }
@@ -92,12 +91,33 @@ function cleanCart() {
 // Exercise 3
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
+    for (i = 0; i <= cartList.length; i++) {
+        total += cartList[i].price;
+        console.log(total);
+    }
+    console.log('El total de la compra es ' + total);
 }
 
 // Exercise 4
 function generateCart() {
     // Using the "cartlist" array that contains all the items in the shopping cart, 
     // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
+    // first step, sort the "cartList" by id
+    cartList.sort((a, b) => {return a.id - b.id; });
+    for (i=0; i < cartList.length; i++) {
+        // check if cart is empty or not
+        if (cart.length < 1 ) {
+            cart.push(cartList[i]);
+            cart[0].quantity = 1;
+        // compare the ids
+        } else if (cartList[i].id === cartList[i-1].id ) {
+            cart[cart.length -1].quantity += 1;
+        } else {
+            cart.push(cartList[i]);
+            cart[cart.length -1].quantity = 1;
+        }
+    }
+    console.log(cart);
 }
 
 // Exercise 5
@@ -126,7 +146,7 @@ function removeFromCart(id) {
     // 2. Add found product to the cartList array
 }
 
-function open_modal(){
-	console.log("Open Modal");
-	printCart();
+function open_modal() {
+    console.log("Open Modal");
+    printCart();
 }
