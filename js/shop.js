@@ -85,7 +85,8 @@ function buy(id) {
 // Exercise 2
 function cleanCart() {
     cartList = [];
-    console.log(cartList);
+    cart = [];
+    // console.log(cartList);
 }
 
 // Exercise 3
@@ -93,7 +94,6 @@ function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
     for (i = 0; i <= cartList.length; i++) {
         total += cartList[i].price;
-        console.log(total);
     }
     console.log('El total de la compra es ' + total);
 }
@@ -103,18 +103,20 @@ function generateCart() {
     // Using the "cartlist" array that contains all the items in the shopping cart, 
     // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
     // first step, sort the "cartList" by id
-    cartList.sort((a, b) => {return a.id - b.id; });
-    for (i=0; i < cartList.length; i++) {
+    cartList.sort((a, b) => {
+        return a.id - b.id;
+    });
+    for (i = 0; i < cartList.length; i++) {
         // check if cart is empty or not
-        if (cart.length < 1 ) {
+        if (cart.length < 1) {
             cart.push(cartList[i]);
             cart[0].quantity = 1;
-        // compare the ids
-        } else if (cartList[i].id === cartList[i-1].id ) {
-            cart[cart.length -1].quantity += 1;
+            // compare the ids
+        } else if (cartList[i].id === cartList[i - 1].id) {
+            cart[cart.length - 1].quantity += 1;
         } else {
             cart.push(cartList[i]);
-            cart[cart.length -1].quantity = 1;
+            cart[cart.length - 1].quantity = 1;
         }
     }
     console.log(cart);
@@ -123,11 +125,44 @@ function generateCart() {
 // Exercise 5
 function applyPromotionsCart() {
     // Apply promotions to each item in the array "cart"
+    // oil discount: can only apply to id(1)
+    for (i = 0; i < cart.length; i++) {
+        if (cart[i].id = 1 && cart[i].quantity >= 3) {
+            cart[i].subtotalWithDiscount = ((cart[i].price * cart[i].quantity) - 10).toFixed(2);
+            console.log("El preu amb descompte de l'oli és de " + cart[i].subtotalWithDiscount);
+            // cake products: can only aplly to id(3)
+        } else if (cart[i].id = 3 && cart[i].quantity >= 10) {
+            cart[i].subtotalWithDiscount = (((cart[i].price * cart[i].quantity) * 2) / 3).toFixed(2);
+            console.log('El preu amb descompte dels productes de pastesseria és de ' + cart[i].subtotalWithDiscount);
+        } else {
+            cart[i].subtotal = (cart[i].price * cart[i].quantity).toFixed(2);
+        }
+    }
 }
 
 // Exercise 6
 function printCart() {
     // Fill the shopping cart modal manipulating the shopping cart dom
+    applyPromotionsCart();
+    total = 0;
+    let textCart = '';
+    
+    for (let i = 0; i < cart.length; i++) {
+        textCart += '<tr>';
+        textCart += '<th scope="row">' + cart[i].name + '</th>';
+        textCart += '<td>' + cart[i].price + '</td>';
+        textCart += '<td>' + cart[i].quantity + '</td>';
+        if (cart[i].subtotalWithDiscount == undefined) {
+            textCart += '<td>' + cart[i].subtotal + '€' + '</td>';
+            total += Number(cart[i].subtotal);
+        } else {
+            textCart += '<td>' + cart[i].subtotalWithDiscount + '€' + '</td>';
+            total += Number(cart[i].subtotalWithDiscount);
+        }
+        textCart += '</tr>';
+    }
+    document.getElementById('cart_list').innerHTML = textCart;
+    document.getElementById('total_price').innerHTML = total;
 }
 
 
