@@ -84,9 +84,13 @@ function buy(id) {
 
 // Exercise 2
 function cleanCart() {
-    cartList = [];
-    cart = [];
-    // console.log(cartList);
+    cartList.length = [];
+    cart.length = [];
+    console.log(cart);
+    
+    // update cart modal
+    document.getElementById('count_product').innerHTML = 0;
+    printCart();
 }
 
 // Exercise 3
@@ -146,17 +150,17 @@ function printCart() {
     applyPromotionsCart();
     total = 0;
     let textCart = '';
-    
+
     for (let i = 0; i < cart.length; i++) {
         textCart += '<tr>';
         textCart += '<th scope="row">' + cart[i].name + '</th>';
         textCart += '<td>' + cart[i].price + '</td>';
         textCart += '<td>' + cart[i].quantity + '</td>';
         if (cart[i].subtotalWithDiscount == undefined) {
-            textCart += '<td>' + cart[i].subtotal + '€' + '</td>';
+            textCart += '<td>' + '$' + cart[i].subtotal + '</td>';
             total += Number(cart[i].subtotal);
         } else {
-            textCart += '<td>' + cart[i].subtotalWithDiscount + '€' + '</td>';
+            textCart += '<td>' + '$' + cart[i].subtotalWithDiscount + '</td>';
             total += Number(cart[i].subtotalWithDiscount);
         }
         textCart += '</tr>';
@@ -168,17 +172,60 @@ function printCart() {
 
 // ** Nivell II **
 
-// Exercise 7
+// Exercise 8
 function addToCart(id) {
     // Refactor previous code in order to simplify it 
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cart array or update its quantity in case it has been added previously.
+
+    // find the index of the product the client is adding to the cart
+    let indexProduct = products.findIndex(productItem => productItem.id === id);
+    let clientItem = products[indexProduct];
+
+    //find the index of the product in the cart
+    let cartProductIndex = cart.findIndex(cartItem => cartItem.id === clientItem.id);
+    // console.log(cartProductIndex);
+
+    if (cartProductIndex == -1) {
+        clientItem.quantity = 1;
+        cart.push(clientItem);
+    } else {
+        cart[cartProductIndex].quantity++;
+    }
+    console.log(cart);
+
+    // update cart quantity on cart icon
+    let counter = 0;
+    for (let i = 0; i < cart.length; i++) {
+        counter += cart[i].quantity;
+    } 
+    document.getElementById('count_product').innerHTML = counter;
 }
 
-// Exercise 8
+// Exercise 9
 function removeFromCart(id) {
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cartList array
+    let indexItem = cart.findIndex (item => item.id === id);
+
+    if (indexItem == -1) {
+        alert("The item you're trying to remove is not in your cart.")
+    } else {
+        if (cart[indexItem].quantity > 1) {
+            cart[indexItem].quantity--;
+            console.log(cart);
+        } else {
+            cart.splice(indexItem, 1);
+        }
+    }
+
+    // update cart quantity on cart icon
+    let counter = 0;
+    for (let i = 0; i < cart.length; i++) {
+        counter += cart[i].quantity;
+    } 
+    document.getElementById('count_product').innerHTML = counter;
+    // console.log(cart);
 }
 
 function open_modal() {
