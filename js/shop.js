@@ -184,7 +184,7 @@ function addToCart(id) {
 
     //find the index of the product in the cart
     let cartProductIndex = cart.findIndex(cartItem => cartItem.id === clientItem.id);
-    console.log(cartProductIndex);
+    // console.log(cartProductIndex);
 
     if (cartProductIndex == -1) {
         clientItem.quantity = 1;
