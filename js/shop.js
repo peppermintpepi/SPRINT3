@@ -84,8 +84,8 @@ function buy(id) {
 
 // Exercise 2
 function cleanCart() {
-    cartList.length = [];
-    cart.length = [];
+    cartList.length = 0;
+    cart.length = 0;
     console.log(cart);
     
     // update cart modal
@@ -97,7 +97,7 @@ function cleanCart() {
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
     for (i = 0; i <= cartList.length; i++) {
-        total += cartList[i].price;
+        total += (cartList[i].price).toFixed(2);
     }
     console.log('El total de la compra es ' + total);
 }
@@ -166,7 +166,7 @@ function printCart() {
         textCart += '</tr>';
     }
     document.getElementById('cart_list').innerHTML = textCart;
-    document.getElementById('total_price').innerHTML = total;
+    document.getElementById('total_price').innerHTML = (total).toFixed(2);
 }
 
 
@@ -179,12 +179,12 @@ function addToCart(id) {
     // 2. Add found product to the cart array or update its quantity in case it has been added previously.
 
     // find the index of the product the client is adding to the cart
-    let indexProduct = products.findIndex(productItem => productItem.id === id);
-    let clientItem = products[indexProduct];
+    // let indexProduct = products.findIndex(productItem => productItem.id === id);
+    let clientItem = products[id -1];
 
     //find the index of the product in the cart
     let cartProductIndex = cart.findIndex(cartItem => cartItem.id === clientItem.id);
-    // console.log(cartProductIndex);
+    console.log(cartProductIndex);
 
     if (cartProductIndex == -1) {
         clientItem.quantity = 1;
