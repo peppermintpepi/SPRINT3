@@ -86,7 +86,6 @@ function buy(id) {
 function cleanCart() {
     cartList.length = 0;
     cart.length = 0;
-    console.log(cart);
     
     // update cart modal
     document.getElementById('count_product').innerHTML = 0;
@@ -129,13 +128,14 @@ function generateCart() {
 // Exercise 5
 function applyPromotionsCart() {
     // Apply promotions to each item in the array "cart"
+    total = 0;
     // oil discount: can only apply to id(1)
     for (i = 0; i < cart.length; i++) {
-        if (cart[i].id = 1 && cart[i].quantity >= 3) {
+        if (cart[i].name === 'cooking oil' && cart[i].quantity >= 3) {
             cart[i].subtotalWithDiscount = ((cart[i].price * cart[i].quantity) - 10).toFixed(2);
             console.log("El preu amb descompte de l'oli és de " + cart[i].subtotalWithDiscount);
-            // cake products: can only aplly to id(3)
-        } else if (cart[i].id = 3 && cart[i].quantity >= 10) {
+            // cake products: can only apply to id(3)
+        } else if (cart[i].name === 'Instant cupcake mixture' && cart[i].quantity >= 10) {
             cart[i].subtotalWithDiscount = (((cart[i].price * cart[i].quantity) * 2) / 3).toFixed(2);
             console.log('El preu amb descompte dels productes de pastesseria és de ' + cart[i].subtotalWithDiscount);
         } else {
@@ -177,9 +177,7 @@ function addToCart(id) {
     // Refactor previous code in order to simplify it 
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cart array or update its quantity in case it has been added previously.
-
     // find the index of the product the client is adding to the cart
-    // let indexProduct = products.findIndex(productItem => productItem.id === id);
     let clientItem = products[id -1];
 
     //find the index of the product in the cart
@@ -187,6 +185,7 @@ function addToCart(id) {
     // console.log(cartProductIndex);
 
     if (cartProductIndex == -1) {
+        clientItem.subtotalWithDiscount = clientItem.price;
         clientItem.quantity = 1;
         cart.push(clientItem);
     } else {
@@ -200,6 +199,7 @@ function addToCart(id) {
         counter += cart[i].quantity;
     } 
     document.getElementById('count_product').innerHTML = counter;
+
 }
 
 // Exercise 9

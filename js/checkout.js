@@ -30,36 +30,54 @@ function validate() {
 		// error++;
 		errorName.style.display = 'block';
 		fName.style.borderColor = 'red';
+	} else {
+		errorName.style.display = 'none';
+		fName.style.borderColor = 'green';
 	}
 
 	if(fEmail.value == "" || !fEmail.value.match(email) || fEmail.length < 3){
 		// error++;
 		errorEmail.style.display = 'block';
 		fEmail.style.borderColor = 'red';
+	} else {
+		errorEmail.style.display = 'none';
+		fEmail.style.borderColor = 'green';
 	}
 	
 	if(fAddress.value == "" || !fAddress.value.match(addressAndPassword)){
 		// error++;
 		errorAdress.style.display = 'block';
 		fAddress.style.borderColor = 'red';
+	} else {
+		errorAdress.style.display = 'none';
+		fAddress.style.borderColor = 'green';
 	}
 
 	if(fLastName.value == "" || !fLastName.value.match(letters)) {
 		// error++;
 		errorLastName.style.display = 'block';
 		fLastName.style.borderColor = 'red';
+	} else {
+		errorLastName.style.display = 'none';
+		fLastName.style.borderColor = 'green';
 	}
 
 	if(fPassword.value == "" || !fPassword.value.match(addressAndPassword) || fPassword.length > 8) {
 		// error++;
 		errorPassword.style.display = 'block';
 		fPassword.style.borderColor = 'red';
+	} else {
+		errorPassword.style.display = 'none';
+		fPassword.style.borderColor = 'green';
 	}
 
-	if(fPhone.value == "" || !fPhone.value.match(numbers)) {
+	if(fPhone.value == "" || !fPhone.value.match(numbers) || (fPhone > 9 < fPhone)) {
 		// error++;
 		errorPhone.style.display = 'block';
 		fPhone.style.borderColor = 'red';
+	} else {
+		errorPhone.style.display = 'none';
+		fPhone.style.borderColor = 'green';
 	}
 	 
 	// if(error>0){
