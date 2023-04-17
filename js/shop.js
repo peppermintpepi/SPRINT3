@@ -131,16 +131,25 @@ function applyPromotionsCart() {
     total = 0;
     // oil discount: can only apply to id(1)
     for (i = 0; i < cart.length; i++) {
+        cart[i].subtotal = 0;
         if (cart[i].name === 'cooking oil' && cart[i].quantity >= 3) {
             cart[i].subtotalWithDiscount = ((cart[i].price * cart[i].quantity) - 10).toFixed(2);
             console.log("El preu amb descompte de l'oli és de " + cart[i].subtotalWithDiscount);
+        } else if (cart[i].name === 'cooking oil' && cart[i].quantity < 3) {
+                cart[i].subtotal = (cart[i].price * cart[i].quantity).toFixed(2);
+                cart[i].subtotalWithDiscount = undefined;
             // cake products: can only apply to id(3)
         } else if (cart[i].name === 'Instant cupcake mixture' && cart[i].quantity >= 10) {
             cart[i].subtotalWithDiscount = (((cart[i].price * cart[i].quantity) * 2) / 3).toFixed(2);
-            console.log('El preu amb descompte dels productes de pastesseria és de ' + cart[i].subtotalWithDiscount);
+        } else if (cart[i].name === 'Instant cupcake mixture' && cart[i].quantity < 10) {
+            cart[i].subtotal = (cart[i].price * cart[i].quantity).toFixed(2);
+            cart[i].subtotalWithDiscount = undefined;
         } else {
             cart[i].subtotal = (cart[i].price * cart[i].quantity).toFixed(2);
+            cart[i].subtotalWithDiscount = undefined;
         }
+        console.log(cart[i].subtotal);
+        console.log(cart[i].subtotalWithDiscount);
     }
 }
 
@@ -159,9 +168,11 @@ function printCart() {
         if (cart[i].subtotalWithDiscount == undefined) {
             textCart += '<td>' + '$' + cart[i].subtotal + '</td>';
             total += Number(cart[i].subtotal);
+            console.log(total);
         } else {
             textCart += '<td>' + '$' + cart[i].subtotalWithDiscount + '</td>';
             total += Number(cart[i].subtotalWithDiscount);
+            console.log(total);
         }
         textCart += '</tr>';
     }
